@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using PaxDrive.Enum;
-using PaxDrive.Model.PaxDrive;
 
 namespace PaxDrive.Model
 {

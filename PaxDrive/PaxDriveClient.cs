@@ -2,26 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
 using Newtonsoft.Json;
 using PaxDrive.Enum;
+using PaxDrive.Exception;
 using PaxDrive.Model;
 using PaxDrive.Model.PaxDrive;
+using Vehicle = PaxDrive.Model.Vehicle;
 
 namespace PaxDrive
 {
     public class PaxDriveClient
     {
-        private readonly string dateFormat = "yyyy-MM-dd HH:mm";
-        private readonly string responseDateFormat = "yyyy-MM-dd HH:mm:ss";
-        private readonly string _query;
-
         private readonly string _baseUrl;
-        private readonly string _token;
         private readonly Currency _currency;
-        private readonly Language _language;
 
         private readonly HttpClient _httpClient;
+        private readonly Language _language;
+        private readonly string _query;
+        private readonly string _token;
+        private readonly string dateFormat = "yyyy-MM-dd HH:mm";
+        private readonly string responseDateFormat = "yyyy-MM-dd HH:mm:ss";
 
         public PaxDriveClient(string baseUrl, string token) : this(baseUrl, token, Currency.Try)
         {
@@ -38,7 +38,7 @@ namespace PaxDrive
             _currency = currency;
             _language = language;
 
-            _httpClient = new HttpClient() {BaseAddress = new Uri(_baseUrl)};
+            _httpClient = new HttpClient {BaseAddress = new Uri(_baseUrl)};
             _httpClient.DefaultRequestHeaders.Add("pax-token", _token);
 
             _query = $"?cid={_currency.Value}&lng={_language.Value}";
@@ -51,7 +51,7 @@ namespace PaxDrive
             var resultJson = _httpClient.GetAsync(path).Result.Content.ReadAsStringAsync().Result;
             var result     = JsonConvert.DeserializeObject<PaxDriveCheckResponse>(resultJson);
 
-            return new CheckResponse()
+            return new CheckResponse
             {
                 PartnerId = result.user_partner_id,
                 UserId    = result.user_id,
@@ -65,19 +65,19 @@ namespace PaxDrive
 
             var values = new List<KeyValuePair<string, string>>
             {
-                new("page", page.ToString()),
+                new("page", page.ToString())
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
             var result     = JsonConvert.DeserializeObject<PaxDriveLocationResponse>(resultJson);
 
-            return new LocationResponse()
+            return new LocationResponse
             {
                 CurrentPage = result.currentPage,
                 Count       = result.pageCount,
                 TotalPage   = result.pageCount,
                 TotalCount  = result.totalItemCount,
-                Locations = result.item_.Select(x => new Location()
+                Locations = result.item_.Select(x => new Location
                 {
                     Id             = x.loc_id,
                     Name           = x.loc_name,
@@ -108,19 +108,19 @@ namespace PaxDrive
                 new("paximum_uid", locationRequest.PaximumId),
                 new("vara_fr_paximum_uid", locationRequest.FromPaximumId),
                 new("gid", locationRequest.GlobalId),
-                new("vara_fr_gid", locationRequest.FromGlobalId),
+                new("vara_fr_gid", locationRequest.FromGlobalId)
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
             var result     = JsonConvert.DeserializeObject<List<PaxDriveLocation>>(resultJson);
 
-            return new LocationResponse()
+            return new LocationResponse
             {
                 CurrentPage = 1,
                 Count       = result.Count,
                 TotalPage   = 1,
                 TotalCount  = result.Count,
-                Locations = result.Select(x => new Location()
+                Locations = result.Select(x => new Location
                 {
                     Id             = x.loc_id,
                     Name           = x.loc_name,
@@ -158,14 +158,14 @@ namespace PaxDrive
                 new("vara_pax_bby", searchVehicleRequest.BabyCount.ToString()),
                 new("_type", searchVehicleRequest.TransferType.Value),
                 new("usr_mu_type", searchVehicleRequest.MarkupType.Value),
-                new("usr_mu_amnt", searchVehicleRequest.MarkupAmount.ToString()),
+                new("usr_mu_amnt", searchVehicleRequest.MarkupAmount.ToString())
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
             var result     = JsonConvert.DeserializeObject<PaxDriveVBookSearchResponse>(resultJson);
 
 
-            return new SearchVehicleResponse()
+            return new SearchVehicleResponse
             {
                 SearchId            = result.vara_id,
                 FromLocationId      = int.Parse(result.fr_loc_id),
@@ -182,7 +182,7 @@ namespace PaxDrive
                 MeetingImage        = result.fr_loc_meet_img,
                 MeetingDescription  = result.fr_loc_meet_txt,
                 ReservationDateTime = DateTime.ParseExact(result.date, responseDateFormat, null),
-                Vehicles = result.vehicle_.Select(v => new PaxDrive.Model.Vehicle()
+                Vehicles = result.vehicle_.Select(v => new Vehicle
                 {
                     Id                = v._id,
                     PartnerId         = v._partner_id,
@@ -201,7 +201,7 @@ namespace PaxDrive
                     Currency          = Currency.GetByValue<Currency>(v.o.vbook_.sysPC_.cid),
                     Price             = v.o.vbook_.sysPC_.prc,
                     SalesPrice        = v.o.vbook_.usrPC_.prc,
-                    ExtraServices = v.o.vbook_.xser_.Select(e => new ExtraService()
+                    ExtraServices = v.o.vbook_.xser_.Select(e => new ExtraService
                     {
                         Id          = e.uid,
                         Code        = e.code,
@@ -227,19 +227,16 @@ namespace PaxDrive
                 new("quantity", selectVehicleRequest.Quantity.ToString())
             };
 
-            foreach (var extraServiceRequest in selectVehicleRequest.ExtraServices)
-            {
-                values.Add(new KeyValuePair<string, string>("xser_uid_[]", extraServiceRequest.ToString()));
-            }
+            foreach (var extraServiceRequest in selectVehicleRequest.ExtraServices) values.Add(new KeyValuePair<string, string>("xser_uid_[]", extraServiceRequest.ToString()));
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
             var result     = JsonConvert.DeserializeObject<PaxDriveVBookSelectResponse>(resultJson);
 
 
-            return new SelectVehicleResponse()
+            return new SelectVehicleResponse
             {
                 SelectId = result.req_id,
-                Vehicle = new PaxDrive.Model.Vehicle()
+                Vehicle = new Vehicle
                 {
                     Id                = result.vehicle._id,
                     PartnerId         = result.vehicle._partner_id,
@@ -258,7 +255,7 @@ namespace PaxDrive
                     Currency          = Currency.GetByValue<Currency>(result.vehicle.o.vbook_.sysPC_.cid),
                     Price             = result.vehicle.o.vbook_.sysPC_.prc,
                     SalesPrice        = result.vehicle.o.vbook_.usrPC_.prc,
-                    ExtraServices = result.vehicle.o.vbook_.xser_.Select(e => new ExtraService()
+                    ExtraServices = result.vehicle.o.vbook_.xser_.Select(e => new ExtraService
                     {
                         Id          = e.uid,
                         Code        = e.code,
@@ -279,7 +276,7 @@ namespace PaxDrive
 
             var values = new List<KeyValuePair<string, string>>
             {
-                new("req_id", createCardRequest.SelectId.ToString()),
+                new("req_id", createCardRequest.SelectId),
                 new("remote_fr_name", createCardRequest.FromLocationName),
                 new("vbook_fr_a", createCardRequest.fromMessage),
                 new("vbook_fr_b", createCardRequest.FromDescription),
@@ -294,7 +291,7 @@ namespace PaxDrive
                 new("vbook_note_ur", createCardRequest.Note),
                 new("cart_name", createCardRequest.PassengerName),
                 new("cart_mail", createCardRequest.PassengerEmail),
-                new("cart_mpno", createCardRequest.PassengerPhone),
+                new("cart_mpno", createCardRequest.PassengerPhone)
             };
 
             int adultCount = 0, kidCount = -1, babyCount = -1;
@@ -330,12 +327,9 @@ namespace PaxDrive
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
             var result     = JsonConvert.DeserializeObject<PaxDriveCreateCardResponse>(resultJson);
 
-            if (!result.CI.enabled)
-            {
-                throw new Exception("Bir hata oluştu", new Exception(resultJson));
-            }
+            if (!result.CI.enabled) throw new Exception("Bir hata oluştu", new Exception(resultJson));
 
-            return new CreateCardResponse()
+            return new CreateCardResponse
             {
                 Token      = result.token,
                 Total      = result.CI.pc_.prc,
@@ -351,19 +345,19 @@ namespace PaxDrive
             var values = new List<KeyValuePair<string, string>>
             {
                 new("page", getListRequest.Page.ToString()),
-                new("order", getListRequest.OrderType.Value),
+                new("order", getListRequest.OrderType.Value)
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
             var result     = JsonConvert.DeserializeObject<PaxDriveGetListResponse>(resultJson);
 
-            return new GetListResponse()
+            return new GetListResponse
             {
                 CurrentPage = 0,
                 Count       = 0,
                 TotalCount  = 0,
                 TotalPage   = 0,
-                Reservations = result.vbook_.Select(x => new Reservation()
+                Reservations = result.vbook_.Select(x => new Reservation
                 {
                     Id                       = x.vbook_id,
                     Code                     = x.vbook_code,
@@ -381,7 +375,7 @@ namespace PaxDrive
                     PassengerPhone           = x.vbook_mpno,
                     PassengerNationalityCode = x.vbook_nation,
                     VehicleType              = VehicleType.GetByValue<VehicleType>(x.vbook_vehicle_type),
-                    Cards = result.cart_.Where(c => c.cart_object_id == x.vbook_id).Select(c => new Card()
+                    Cards = result.cart_.Where(c => c.cart_object_id == x.vbook_id).Select(c => new Card
                     {
                         Id = c.cart_id
                     }).ToList()
@@ -407,11 +401,11 @@ namespace PaxDrive
                 new("vbook_nation", editCardRequest.PassengerNationalityCode),
                 new("vbook_note_ur", editCardRequest.Note),
                 new("vbook_pax_adt", (editCardRequest.Passengers.Count(x => x.PassengerType == PassengerType.Adult) + 1).ToString()),
-                new("vbook_pax_kid", (editCardRequest.Passengers.Count(x => x.PassengerType == PassengerType.Kid)).ToString()),
-                new("vbook_pax_bby", (editCardRequest.Passengers.Count(x => x.PassengerType == PassengerType.Baby)).ToString()),
+                new("vbook_pax_kid", editCardRequest.Passengers.Count(x => x.PassengerType == PassengerType.Kid).ToString()),
+                new("vbook_pax_bby", editCardRequest.Passengers.Count(x => x.PassengerType == PassengerType.Baby).ToString()),
                 new("cart_name", editCardRequest.PassengerName),
                 new("cart_mail", editCardRequest.PassengerEmail),
-                new("cart_mpno", editCardRequest.PassengerPhone),
+                new("cart_mpno", editCardRequest.PassengerPhone)
             };
 
             int adultCount = 0, kidCount = -1, babyCount = -1;
@@ -447,7 +441,7 @@ namespace PaxDrive
             var result     = JsonConvert.DeserializeObject<PaxDriveEditResponse>(resultJson);
 
 
-            return new EditCardResponse()
+            return new EditCardResponse
             {
                 Status = result.success
             };
@@ -460,13 +454,13 @@ namespace PaxDrive
             var values = new List<KeyValuePair<string, string>>
             {
                 new("vbook_code", editReservationDateRequest.OrderCode),
-                new("vbook_date", editReservationDateRequest.ReservationDate.ToString(dateFormat)),
+                new("vbook_date", editReservationDateRequest.ReservationDate.ToString(dateFormat))
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
             var result     = JsonConvert.DeserializeObject<PaxDriveEditDateResponse>(resultJson);
 
-            return new EditReservationDateResponse()
+            return new EditReservationDateResponse
             {
                 Status = result.success
             };
@@ -478,13 +472,13 @@ namespace PaxDrive
 
             var values = new List<KeyValuePair<string, string>>
             {
-                new("vbook_code", orderCod),
+                new("vbook_code", orderCod)
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
             var result     = JsonConvert.DeserializeObject<PaxDriveReservationResponse>(resultJson);
 
-            return result.vbook_.Select(x => new Reservation()
+            return result.vbook_.Select(x => new Reservation
             {
                 Id                       = x.vbook_id,
                 Code                     = x.vbook_code,
@@ -502,7 +496,7 @@ namespace PaxDrive
                 PassengerPhone           = x.vbook_mpno,
                 PassengerNationalityCode = x.vbook_nation,
                 VehicleType              = VehicleType.GetByValue<VehicleType>(x.vbook_vehicle_type),
-                Cards                    = result.cart_.Select(c => new Card() {Id = c.cart_id}).ToList()
+                Cards                    = result.cart_.Select(c => new Card {Id = c.cart_id}).ToList()
             }).FirstOrDefault();
         }
 
@@ -512,13 +506,13 @@ namespace PaxDrive
 
             var values = new List<KeyValuePair<string, string>>
             {
-                new("cart_id", cancelRequest.CardId.ToString()),
+                new("cart_id", cancelRequest.CardId.ToString())
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
             var result     = JsonConvert.DeserializeObject<PaxDriveCancelResponse>(resultJson);
 
-            return new CancelResponse()
+            return new CancelResponse
             {
                 Status = result.success
             };
@@ -534,21 +528,18 @@ namespace PaxDrive
 
                 foreach (var card in reservation.Cards)
                 {
-                    var result = CancelCard(new CancelRequest() {CardId = card.Id});
-                    if (result.Status == false)
-                    {
-                        throw new Exception("iptal işlemi sırasında bir hata oluştur.");
-                    }
+                    var result = CancelCard(new CancelRequest {CardId = card.Id});
+                    if (result.Status == false) throw new PaxDriveException("error", "iptal işlemi sırasında bir hata oluştur.", "Transfer");
                 }
 
-                return new CancelResponse()
+                return new CancelResponse
                 {
                     Status = true
                 };
             }
             catch (Exception e)
             {
-                return new CancelResponse()
+                return new CancelResponse
                 {
                     Status = false
                 };
@@ -559,7 +550,7 @@ namespace PaxDrive
         {
             try
             {
-                var resultCard = EditCard(new EditCardRequest()
+                var resultCard = EditCard(new EditCardRequest
                 {
                     OrderCode                = editReservationRequest.OrderCode,
                     FromDescription          = editReservationRequest.FromDescription,
@@ -574,20 +565,20 @@ namespace PaxDrive
                     Note                     = editReservationRequest.Note,
                     Passengers               = editReservationRequest.Passengers
                 });
-                var resutDate = EditReservationDate(new EditReservationDateRequest()
+                var resutDate = EditReservationDate(new EditReservationDateRequest
                 {
                     OrderCode       = editReservationRequest.OrderCode,
                     ReservationDate = editReservationRequest.ReservationDate
                 });
 
-                return new EditReservationResponse()
+                return new EditReservationResponse
                 {
                     Status = resultCard.Status && resutDate.Status
                 };
             }
             catch (Exception e)
             {
-                return new EditReservationResponse()
+                return new EditReservationResponse
                 {
                     Status = false
                 };

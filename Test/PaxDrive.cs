@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 using PaxDrive;
 using PaxDrive.Enum;
@@ -51,7 +50,7 @@ namespace Test
         [Test]
         public void SearchVehicle()
         {
-            var request = new SearchVehicleRequest()
+            var request = new SearchVehicleRequest
             {
                 AdultCount          = 1,
                 KidCount            = 1,
@@ -61,7 +60,7 @@ namespace Test
                 MarkupAmount        = 10,
                 ReservationDateTime = new DateTime(2022, 1, 10),
                 FromLocationId      = 136,
-                ToLocationId        = 148,
+                ToLocationId        = 148
             };
 
             var result = _paxDriveClient.SearchVehicle(request);
@@ -72,7 +71,7 @@ namespace Test
         [Test]
         public void SelectVehicle()
         {
-            var request = new SearchVehicleRequest()
+            var request = new SearchVehicleRequest
             {
                 AdultCount          = 1,
                 KidCount            = 1,
@@ -82,12 +81,12 @@ namespace Test
                 MarkupAmount        = 10,
                 ReservationDateTime = new DateTime(2022, 1, 10),
                 FromLocationId      = 136,
-                ToLocationId        = 148,
+                ToLocationId        = 148
             };
 
             var result = _paxDriveClient.SearchVehicle(request);
 
-            var request1 = new SelectVehicleRequest()
+            var request1 = new SelectVehicleRequest
             {
                 SearchId  = result.SearchId,
                 Quantity  = 1,
@@ -103,7 +102,7 @@ namespace Test
         [Test]
         public void CreateCard()
         {
-            var request = new SearchVehicleRequest()
+            var request = new SearchVehicleRequest
             {
                 AdultCount          = 1,
                 KidCount            = 1,
@@ -113,12 +112,12 @@ namespace Test
                 MarkupAmount        = 10,
                 ReservationDateTime = new DateTime(2022, 1, 10),
                 FromLocationId      = 136,
-                ToLocationId        = 148,
+                ToLocationId        = 148
             };
 
             var result = _paxDriveClient.SearchVehicle(request);
 
-            var request1 = new SelectVehicleRequest()
+            var request1 = new SelectVehicleRequest
             {
                 SearchId  = result.SearchId,
                 Quantity  = 1,
@@ -128,7 +127,7 @@ namespace Test
 
             var result1 = _paxDriveClient.SelectVehicle(request1);
 
-            var card = new CreateCardRequest()
+            var card = new CreateCardRequest
             {
                 SelectId                 = result1.SelectId,
                 FromLocationName         = "FromLocationName",
@@ -142,29 +141,29 @@ namespace Test
                 PassengerPhone           = "PassengerPhone",
                 PassengerNationalityCode = "TR",
                 PassengerIdentityNumber  = "5555555555",
-                Passengers = new List<PassengerRequest>()
+                Passengers = new List<PassengerRequest>
                 {
-                    new PassengerRequest()
+                    new()
                     {
                         PassengerType   = PassengerType.Adult,
                         Name            = "Test Yetiskin",
                         NationalityCode = "TR",
                         IdentityNumber  = "123"
                     },
-                    new PassengerRequest()
+                    new()
                     {
                         PassengerType   = PassengerType.Kid,
                         Name            = "test cocuk",
                         NationalityCode = "TR",
                         IdentityNumber  = "123"
                     },
-                    new PassengerRequest()
+                    new()
                     {
                         PassengerType   = PassengerType.Baby,
                         Name            = "test bebek",
                         NationalityCode = "TR",
                         IdentityNumber  = "123"
-                    },
+                    }
                 }
             };
             var result2 = _paxDriveClient.CreateCard(card);
@@ -186,7 +185,7 @@ namespace Test
         [Test]
         public void GetList()
         {
-            var reservaations = _paxDriveClient.GetList(new GetListRequest()
+            var reservaations = _paxDriveClient.GetList(new GetListRequest
             {
                 OrderType = OrderType.TransferDateDesc
             });

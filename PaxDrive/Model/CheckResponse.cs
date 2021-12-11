@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace PaxDrive.Model
 {
     public class CheckResponse

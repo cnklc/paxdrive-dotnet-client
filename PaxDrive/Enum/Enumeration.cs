@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace PaxDrive.Enum
 {
@@ -21,8 +20,8 @@ namespace PaxDrive.Enum
             Value = value;
         }
 
-        public string Name { get; private set; }
-        public ValueType Value { get; private set; }
+        public string Name { get; }
+        public ValueType Value { get; }
 
         public static IEnumerable<T> GetAll<T>() where T : Enumeration<ValueType>
         {
@@ -42,7 +41,7 @@ namespace PaxDrive.Enum
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((Enumeration<ValueType>) obj);
         }
 

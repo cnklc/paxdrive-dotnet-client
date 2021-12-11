@@ -82,7 +82,7 @@ namespace PaxDrive.Model.PaxDrive
     {
         public bool success { get; set; }
     }
-    
+
     public class PaxDriveGetListResponse
     {
         public List<Cart> cart_ { get; set; }
