@@ -1,4 +1,5 @@
-namespace PaxDrive.Model
+ 
+namespace Hangar.Model
 {
     public class EditReservationResponse
     {

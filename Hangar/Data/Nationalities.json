@@ -1,0 +1,1182 @@
+[
+  {
+    "1": 2,
+    "AF": "AL",
+    "Afganistan": "Arnavutluk"
+  },
+  {
+    "1": 3,
+    "AF": "DZ",
+    "Afganistan": "Cezayir"
+  },
+  {
+    "1": 4,
+    "AF": "AS",
+    "Afganistan": "Cocos Adalari"
+  },
+  {
+    "1": 5,
+    "AF": "AD",
+    "Afganistan": "Andorra"
+  },
+  {
+    "1": 6,
+    "AF": "AO",
+    "Afganistan": "Angola"
+  },
+  {
+    "1": 7,
+    "AF": "AI",
+    "Afganistan": "Anguilla"
+  },
+  {
+    "1": 8,
+    "AF": "AQ",
+    "Afganistan": "Antartika"
+  },
+  {
+    "1": 9,
+    "AF": "AG",
+    "Afganistan": "Antigua And Barbuda"
+  },
+  {
+    "1": 10,
+    "AF": "AR",
+    "Afganistan": "Arjantin"
+  },
+  {
+    "1": 11,
+    "AF": "AM",
+    "Afganistan": "Ermenistan"
+  },
+  {
+    "1": 12,
+    "AF": "AW",
+    "Afganistan": "Aruba"
+  },
+  {
+    "1": 13,
+    "AF": "AU",
+    "Afganistan": "Avusturalya"
+  },
+  {
+    "1": 14,
+    "AF": "AT",
+    "Afganistan": "Avusturya"
+  },
+  {
+    "1": 15,
+    "AF": "AZ",
+    "Afganistan": "Azerbaycan"
+  },
+  {
+    "1": 16,
+    "AF": "BS",
+    "Afganistan": "bahamalar"
+  },
+  {
+    "1": 17,
+    "AF": "BH",
+    "Afganistan": "Bahreyn"
+  },
+  {
+    "1": 18,
+    "AF": "BD",
+    "Afganistan": "Banglades"
+  },
+  {
+    "1": 19,
+    "AF": "BB",
+    "Afganistan": "Barbados"
+  },
+  {
+    "1": 20,
+    "AF": "BY",
+    "Afganistan": "Beyaz Rusya"
+  },
+  {
+    "1": 21,
+    "AF": "BE",
+    "Afganistan": "Belçika"
+  },
+  {
+    "1": 22,
+    "AF": "BZ",
+    "Afganistan": "Belize"
+  },
+  {
+    "1": 23,
+    "AF": "BJ",
+    "Afganistan": "Benin"
+  },
+  {
+    "1": 24,
+    "AF": "BM",
+    "Afganistan": "Bermuda"
+  },
+  {
+    "1": 25,
+    "AF": "BT",
+    "Afganistan": "Butan"
+  },
+  {
+    "1": 26,
+    "AF": "BO",
+    "Afganistan": "Bolivya"
+  },
+  {
+    "1": 27,
+    "AF": "BA",
+    "Afganistan": "Bosna Hersek"
+  },
+  {
+    "1": 28,
+    "AF": "BW",
+    "Afganistan": "Botsvana"
+  },
+  {
+    "1": 29,
+    "AF": "BR",
+    "Afganistan": "Brezilya"
+  },
+  {
+    "1": 30,
+    "AF": "BN",
+    "Afganistan": "Brunei"
+  },
+  {
+    "1": 31,
+    "AF": "BG",
+    "Afganistan": "Bulgaristan"
+  },
+  {
+    "1": 32,
+    "AF": "BF",
+    "Afganistan": "Burkina Faso"
+  },
+  {
+    "1": 33,
+    "AF": "BI",
+    "Afganistan": "Burundi"
+  },
+  {
+    "1": 34,
+    "AF": "KH",
+    "Afganistan": "Kamboçya"
+  },
+  {
+    "1": 35,
+    "AF": "CM",
+    "Afganistan": "Kamerun"
+  },
+  {
+    "1": 36,
+    "AF": "CA",
+    "Afganistan": "Kanada"
+  },
+  {
+    "1": 37,
+    "AF": "CA",
+    "Afganistan": "Kanada Buffer"
+  },
+  {
+    "1": 38,
+    "AF": "CV",
+    "Afganistan": "Cape Verde"
+  },
+  {
+    "1": 39,
+    "AF": "KY",
+    "Afganistan": "Cayman Adalari"
+  },
+  {
+    "1": 40,
+    "AF": "CF",
+    "Afganistan": "Orta Afrika Cumhuriyeti"
+  },
+  {
+    "1": 41,
+    "AF": "TD",
+    "Afganistan": "Çad"
+  },
+  {
+    "1": 42,
+    "AF": "CL",
+    "Afganistan": "Sili"
+  },
+  {
+    "1": 43,
+    "AF": "CN",
+    "Afganistan": "Çin"
+  },
+  {
+    "1": 44,
+    "AF": "CX",
+    "Afganistan": "Christmas Adasi"
+  },
+  {
+    "1": 45,
+    "AF": "CC",
+    "Afganistan": "Cocos Adalari"
+  },
+  {
+    "1": 46,
+    "AF": "CO",
+    "Afganistan": "Kolombiya"
+  },
+  {
+    "1": 47,
+    "AF": "KM",
+    "Afganistan": "Komor Adalari"
+  },
+  {
+    "1": 48,
+    "AF": "CG",
+    "Afganistan": "Kongo"
+  },
+  {
+    "1": 49,
+    "AF": "CD",
+    "Afganistan": "Zaire"
+  },
+  {
+    "1": 50,
+    "AF": "CK",
+    "Afganistan": "Cook Adalari"
+  },
+  {
+    "1": 51,
+    "AF": "CR",
+    "Afganistan": "Kosta Rika"
+  },
+  {
+    "1": 52,
+    "AF": "CI",
+    "Afganistan": "Fildisi Sahili"
+  },
+  {
+    "1": 53,
+    "AF": "HR",
+    "Afganistan": "Hirvatistan"
+  },
+  {
+    "1": 54,
+    "AF": "CU",
+    "Afganistan": "Küba"
+  },
+  {
+    "1": 55,
+    "AF": "CY",
+    "Afganistan": "Kıbrıs"
+  },
+  {
+    "1": 56,
+    "AF": "CZ",
+    "Afganistan": "Çek Cumhuriyeti"
+  },
+  {
+    "1": 57,
+    "AF": "DK",
+    "Afganistan": "Danimarka"
+  },
+  {
+    "1": 58,
+    "AF": "DJ",
+    "Afganistan": "Cibuti"
+  },
+  {
+    "1": 59,
+    "AF": "DM",
+    "Afganistan": "Dominika"
+  },
+  {
+    "1": 60,
+    "AF": "DO",
+    "Afganistan": "Dominik Cumhuriyeti"
+  },
+  {
+    "1": 61,
+    "AF": "TP",
+    "Afganistan": "Timor"
+  },
+  {
+    "1": 62,
+    "AF": "EC",
+    "Afganistan": "Ekvator"
+  },
+  {
+    "1": 63,
+    "AF": "EG",
+    "Afganistan": "Misir"
+  },
+  {
+    "1": 64,
+    "AF": "SV",
+    "Afganistan": "El Salvador"
+  },
+  {
+    "1": 65,
+    "AF": "GQ",
+    "Afganistan": "Ekvator Gine"
+  },
+  {
+    "1": 66,
+    "AF": "ER",
+    "Afganistan": "Eritre"
+  },
+  {
+    "1": 67,
+    "AF": "EE",
+    "Afganistan": "Estonya"
+  },
+  {
+    "1": 68,
+    "AF": "ET",
+    "Afganistan": "Etiyopya"
+  },
+  {
+    "1": 69,
+    "AF": "FK",
+    "Afganistan": "Falkland Adalari"
+  },
+  {
+    "1": 70,
+    "AF": "FO",
+    "Afganistan": "Faroe Adalari"
+  },
+  {
+    "1": 71,
+    "AF": "FJ",
+    "Afganistan": "Fiji"
+  },
+  {
+    "1": 72,
+    "AF": "FI",
+    "Afganistan": "Finlandiya"
+  },
+  {
+    "1": 73,
+    "AF": "FR",
+    "Afganistan": "Fransa"
+  },
+  {
+    "1": 74,
+    "AF": "GF",
+    "Afganistan": "Fransiz Guyanasi"
+  },
+  {
+    "1": 75,
+    "AF": "PF",
+    "Afganistan": "Fransiz Polynesia"
+  },
+  {
+    "1": 76,
+    "AF": "GA",
+    "Afganistan": "Gabon"
+  },
+  {
+    "1": 77,
+    "AF": "GM",
+    "Afganistan": "Gambiya"
+  },
+  {
+    "1": 78,
+    "AF": "GE",
+    "Afganistan": "Gürcistan"
+  },
+  {
+    "1": 79,
+    "AF": "DE",
+    "Afganistan": "Almanya"
+  },
+  {
+    "1": 80,
+    "AF": "GH",
+    "Afganistan": "Gana"
+  },
+  {
+    "1": 81,
+    "AF": "GI",
+    "Afganistan": "Cebelitarik"
+  },
+  {
+    "1": 82,
+    "AF": "GR",
+    "Afganistan": "Yunanistan"
+  },
+  {
+    "1": 83,
+    "AF": "GL",
+    "Afganistan": "Grönland"
+  },
+  {
+    "1": 84,
+    "AF": "VC",
+    "Afganistan": "Grenada"
+  },
+  {
+    "1": 85,
+    "AF": "GP",
+    "Afganistan": "Guadalup"
+  },
+  {
+    "1": 86,
+    "AF": "GU",
+    "Afganistan": "Guam"
+  },
+  {
+    "1": 87,
+    "AF": "GT",
+    "Afganistan": "Guatemala"
+  },
+  {
+    "1": 88,
+    "AF": "GN",
+    "Afganistan": "Gine"
+  },
+  {
+    "1": 89,
+    "AF": "GW",
+    "Afganistan": "Gine Bissau"
+  },
+  {
+    "1": 90,
+    "AF": "GF",
+    "Afganistan": "Guyana"
+  },
+  {
+    "1": 91,
+    "AF": "HT",
+    "Afganistan": "Haiti"
+  },
+  {
+    "1": 92,
+    "AF": "HN",
+    "Afganistan": "Honduras"
+  },
+  {
+    "1": 93,
+    "AF": "HK",
+    "Afganistan": "Hong Kong"
+  },
+  {
+    "1": 94,
+    "AF": "HU",
+    "Afganistan": "Macaristan"
+  },
+  {
+    "1": 95,
+    "AF": "IS",
+    "Afganistan": "Izlanda"
+  },
+  {
+    "1": 96,
+    "AF": "IN",
+    "Afganistan": "Hindistan"
+  },
+  {
+    "1": 97,
+    "AF": "ID",
+    "Afganistan": "Endonezya"
+  },
+  {
+    "1": 98,
+    "AF": "IR",
+    "Afganistan": "Iran"
+  },
+  {
+    "1": 99,
+    "AF": "IQ",
+    "Afganistan": "Irak"
+  },
+  {
+    "1": 100,
+    "AF": "IE",
+    "Afganistan": "Irlanda"
+  },
+  {
+    "1": 101,
+    "AF": "IL",
+    "Afganistan": "Israil"
+  },
+  {
+    "1": 102,
+    "AF": "IT",
+    "Afganistan": "Italya"
+  },
+  {
+    "1": 103,
+    "AF": "JM",
+    "Afganistan": "Jamaika"
+  },
+  {
+    "1": 104,
+    "AF": "JP",
+    "Afganistan": "Japonya"
+  },
+  {
+    "1": 105,
+    "AF": "JO",
+    "Afganistan": "Ürdün"
+  },
+  {
+    "1": 106,
+    "AF": "KZ",
+    "Afganistan": "Kazakistan"
+  },
+  {
+    "1": 107,
+    "AF": "KE",
+    "Afganistan": "Kenya"
+  },
+  {
+    "1": 108,
+    "AF": "KI",
+    "Afganistan": "Kiribati"
+  },
+  {
+    "1": 109,
+    "AF": "KP",
+    "Afganistan": "Kuzey Kore"
+  },
+  {
+    "1": 110,
+    "AF": "KR",
+    "Afganistan": "Güney Kore"
+  },
+  {
+    "1": 111,
+    "AF": "KW",
+    "Afganistan": "Kuveyt"
+  },
+  {
+    "1": 112,
+    "AF": "KG",
+    "Afganistan": "Kirgizistan"
+  },
+  {
+    "1": 113,
+    "AF": "LA",
+    "Afganistan": "Lao People's Demokratik Cumhuriyeti"
+  },
+  {
+    "1": 114,
+    "AF": "LV",
+    "Afganistan": "Letonya"
+  },
+  {
+    "1": 115,
+    "AF": "LB",
+    "Afganistan": "Lübnan"
+  },
+  {
+    "1": 116,
+    "AF": "LS",
+    "Afganistan": "Lesotho"
+  },
+  {
+    "1": 117,
+    "AF": "LR",
+    "Afganistan": "Liberya"
+  },
+  {
+    "1": 118,
+    "AF": "LY",
+    "Afganistan": "Libya"
+  },
+  {
+    "1": 119,
+    "AF": "LI",
+    "Afganistan": "Lihtenstayn"
+  },
+  {
+    "1": 120,
+    "AF": "LT",
+    "Afganistan": "Litvanya"
+  },
+  {
+    "1": 121,
+    "AF": "LU",
+    "Afganistan": "Lüksemburg"
+  },
+  {
+    "1": 122,
+    "AF": "MO",
+    "Afganistan": "Makao - Çin"
+  },
+  {
+    "1": 123,
+    "AF": "MK",
+    "Afganistan": "Makedonya"
+  },
+  {
+    "1": 124,
+    "AF": "MG",
+    "Afganistan": "Madagaskar"
+  },
+  {
+    "1": 125,
+    "AF": "MW",
+    "Afganistan": "Malavi"
+  },
+  {
+    "1": 126,
+    "AF": "MY",
+    "Afganistan": "Malezya"
+  },
+  {
+    "1": 127,
+    "AF": "MV",
+    "Afganistan": "Maldiv Adalari"
+  },
+  {
+    "1": 128,
+    "AF": "ML",
+    "Afganistan": "Mali"
+  },
+  {
+    "1": 129,
+    "AF": "MT",
+    "Afganistan": "Malta"
+  },
+  {
+    "1": 130,
+    "AF": "MH",
+    "Afganistan": "Marshall Adalari"
+  },
+  {
+    "1": 131,
+    "AF": "MQ",
+    "Afganistan": "Martinik"
+  },
+  {
+    "1": 132,
+    "AF": "MR",
+    "Afganistan": "Moritanya"
+  },
+  {
+    "1": 133,
+    "AF": "MU",
+    "Afganistan": "Mauritius Adasi"
+  },
+  {
+    "1": 134,
+    "AF": "YT",
+    "Afganistan": "Mayotte"
+  },
+  {
+    "1": 135,
+    "AF": "MX",
+    "Afganistan": "Meksika"
+  },
+  {
+    "1": 136,
+    "AF": "MX",
+    "Afganistan": "Meksika Buffer"
+  },
+  {
+    "1": 137,
+    "AF": "FM",
+    "Afganistan": "Mikronezya"
+  },
+  {
+    "1": 138,
+    "AF": "MD",
+    "Afganistan": "Moldovya"
+  },
+  {
+    "1": 139,
+    "AF": "MC",
+    "Afganistan": "Monako"
+  },
+  {
+    "1": 140,
+    "AF": "MN",
+    "Afganistan": "Moğolistan"
+  },
+  {
+    "1": 141,
+    "AF": "ME",
+    "Afganistan": "Karadag"
+  },
+  {
+    "1": 142,
+    "AF": "MS",
+    "Afganistan": "Montserrat"
+  },
+  {
+    "1": 143,
+    "AF": "MA",
+    "Afganistan": "Fas"
+  },
+  {
+    "1": 144,
+    "AF": "MZ",
+    "Afganistan": "Mozambik"
+  },
+  {
+    "1": 145,
+    "AF": "MM",
+    "Afganistan": "Myanmar"
+  },
+  {
+    "1": 146,
+    "AF": "NA",
+    "Afganistan": "Namibya"
+  },
+  {
+    "1": 147,
+    "AF": "NR",
+    "Afganistan": "Nauru Adasi"
+  },
+  {
+    "1": 148,
+    "AF": "NP",
+    "Afganistan": "Nepal"
+  },
+  {
+    "1": 149,
+    "AF": "NL",
+    "Afganistan": "Hollanda"
+  },
+  {
+    "1": 150,
+    "AF": "AN",
+    "Afganistan": "Hollanda Antilleri"
+  },
+  {
+    "1": 151,
+    "AF": "NC",
+    "Afganistan": "Yeni Kaledonya"
+  },
+  {
+    "1": 152,
+    "AF": "NZ",
+    "Afganistan": "Yeni Zelanda"
+  },
+  {
+    "1": 153,
+    "AF": "NI",
+    "Afganistan": "Nikaragua"
+  },
+  {
+    "1": 154,
+    "AF": "NE",
+    "Afganistan": "Nijer"
+  },
+  {
+    "1": 155,
+    "AF": "NG",
+    "Afganistan": "Nijerya"
+  },
+  {
+    "1": 156,
+    "AF": "NU",
+    "Afganistan": "Niue Adalari"
+  },
+  {
+    "1": 157,
+    "AF": "NF",
+    "Afganistan": "Norfolk Adalari"
+  },
+  {
+    "1": 158,
+    "AF": "MP",
+    "Afganistan": "Kuzey Mariana Adalari"
+  },
+  {
+    "1": 159,
+    "AF": "NO",
+    "Afganistan": "Norveç"
+  },
+  {
+    "1": 160,
+    "AF": "OM",
+    "Afganistan": "Umman"
+  },
+  {
+    "1": 161,
+    "AF": "PK",
+    "Afganistan": "Pakistan"
+  },
+  {
+    "1": 162,
+    "AF": "PW",
+    "Afganistan": "Palau Adalari"
+  },
+  {
+    "1": 163,
+    "AF": "PS",
+    "Afganistan": "Filistin"
+  },
+  {
+    "1": 164,
+    "AF": "PA",
+    "Afganistan": "Panama"
+  },
+  {
+    "1": 165,
+    "AF": "PG",
+    "Afganistan": "Papua Yeni Gine"
+  },
+  {
+    "1": 166,
+    "AF": "PY",
+    "Afganistan": "Paraguay"
+  },
+  {
+    "1": 167,
+    "AF": "PE",
+    "Afganistan": "Peru"
+  },
+  {
+    "1": 168,
+    "AF": "PH",
+    "Afganistan": "Filipinler"
+  },
+  {
+    "1": 169,
+    "AF": "PL",
+    "Afganistan": "Polonya"
+  },
+  {
+    "1": 170,
+    "AF": "PT",
+    "Afganistan": "Portekiz"
+  },
+  {
+    "1": 171,
+    "AF": "PR",
+    "Afganistan": "Porto Riko"
+  },
+  {
+    "1": 172,
+    "AF": "QA",
+    "Afganistan": "Katar"
+  },
+  {
+    "1": 173,
+    "AF": "RE",
+    "Afganistan": "Reunion Adasi"
+  },
+  {
+    "1": 174,
+    "AF": "RO",
+    "Afganistan": "Romanya"
+  },
+  {
+    "1": 175,
+    "AF": "RU",
+    "Afganistan": "Rusya"
+  },
+  {
+    "1": 176,
+    "AF": "RW",
+    "Afganistan": "Ruanda"
+  },
+  {
+    "1": 177,
+    "AF": "AS",
+    "Afganistan": "Samoa"
+  },
+  {
+    "1": 178,
+    "AF": "SM",
+    "Afganistan": "San Marino"
+  },
+  {
+    "1": 179,
+    "AF": "ST",
+    "Afganistan": "Sao Tome ve Principe Adalari"
+  },
+  {
+    "1": 180,
+    "AF": "SA",
+    "Afganistan": "Suudi Arabistan"
+  },
+  {
+    "1": 181,
+    "AF": "SN",
+    "Afganistan": "Senagal"
+  },
+  {
+    "1": 182,
+    "AF": "RS",
+    "Afganistan": "Sirbistan"
+  },
+  {
+    "1": 183,
+    "AF": "SC",
+    "Afganistan": "Seysel Adalari"
+  },
+  {
+    "1": 184,
+    "AF": "SL",
+    "Afganistan": "Sierra Leone"
+  },
+  {
+    "1": 185,
+    "AF": "SG",
+    "Afganistan": "Singapur"
+  },
+  {
+    "1": 186,
+    "AF": "SX",
+    "Afganistan": "Sint Maarten"
+  },
+  {
+    "1": 187,
+    "AF": "SK",
+    "Afganistan": "Slovakya"
+  },
+  {
+    "1": 188,
+    "AF": "SI",
+    "Afganistan": "Slovenya"
+  },
+  {
+    "1": 189,
+    "AF": "SB",
+    "Afganistan": "Solomon Adalari"
+  },
+  {
+    "1": 190,
+    "AF": "SO",
+    "Afganistan": "Somali"
+  },
+  {
+    "1": 191,
+    "AF": "ZA",
+    "Afganistan": "Güney Afrika"
+  },
+  {
+    "1": 192,
+    "AF": "ES",
+    "Afganistan": "Ispanya"
+  },
+  {
+    "1": 193,
+    "AF": "LK",
+    "Afganistan": "Sri Lanka"
+  },
+  {
+    "1": 194,
+    "AF": "SH",
+    "Afganistan": "St. Helena Adasi"
+  },
+  {
+    "1": 195,
+    "AF": "KN",
+    "Afganistan": "St. Kitts"
+  },
+  {
+    "1": 196,
+    "AF": "LC",
+    "Afganistan": "St. Lucia"
+  },
+  {
+    "1": 197,
+    "AF": "PM",
+    "Afganistan": "St. Pierre And Miquelon"
+  },
+  {
+    "1": 198,
+    "AF": "VC",
+    "Afganistan": "St. Vincent"
+  },
+  {
+    "1": 199,
+    "AF": "SD",
+    "Afganistan": "Sudan"
+  },
+  {
+    "1": 200,
+    "AF": "SR",
+    "Afganistan": "Surinam"
+  },
+  {
+    "1": 201,
+    "AF": "SZ",
+    "Afganistan": "Swaziland"
+  },
+  {
+    "1": 202,
+    "AF": "SE",
+    "Afganistan": "Isveç"
+  },
+  {
+    "1": 203,
+    "AF": "CH",
+    "Afganistan": "Isviçre"
+  },
+  {
+    "1": 204,
+    "AF": "SY",
+    "Afganistan": "Suriye"
+  },
+  {
+    "1": 205,
+    "AF": "TW",
+    "Afganistan": "Tayvan"
+  },
+  {
+    "1": 206,
+    "AF": "TJ",
+    "Afganistan": "Tacikistan"
+  },
+  {
+    "1": 207,
+    "AF": "TZ",
+    "Afganistan": "Tanzanya"
+  },
+  {
+    "1": 208,
+    "AF": "TH",
+    "Afganistan": "Tayland"
+  },
+  {
+    "1": 209,
+    "AF": "TL",
+    "Afganistan": "Timor Leste"
+  },
+  {
+    "1": 210,
+    "AF": "TG",
+    "Afganistan": "Togo"
+  },
+  {
+    "1": 211,
+    "AF": "TK",
+    "Afganistan": "Tokelan"
+  },
+  {
+    "1": 212,
+    "AF": "TO",
+    "Afganistan": "Tonga"
+  },
+  {
+    "1": 213,
+    "AF": "TT",
+    "Afganistan": "Trinidad And Tobago"
+  },
+  {
+    "1": 214,
+    "AF": "TN",
+    "Afganistan": "Tunus"
+  },
+  {
+    "1": 215,
+    "AF": "TR",
+    "Afganistan": "Türkiye"
+  },
+  {
+    "1": 216,
+    "AF": "TM",
+    "Afganistan": "Türkmenistan"
+  },
+  {
+    "1": 217,
+    "AF": "TC",
+    "Afganistan": "Turks And Caicos Adalari"
+  },
+  {
+    "1": 218,
+    "AF": "TV",
+    "Afganistan": "Tuvalu"
+  },
+  {
+    "1": 219,
+    "AF": "UM",
+    "Afganistan": "U.S. Minor Outlying Adalari"
+  },
+  {
+    "1": 220,
+    "AF": "UG",
+    "Afganistan": "Uganda"
+  },
+  {
+    "1": 221,
+    "AF": "UA",
+    "Afganistan": "Ukrayna"
+  },
+  {
+    "1": 222,
+    "AF": "AE",
+    "Afganistan": "Birlesik Arap Emirlikleri"
+  },
+  {
+    "1": 223,
+    "AF": "GB",
+    "Afganistan": "Ingiltere"
+  },
+  {
+    "1": 224,
+    "AF": "US",
+    "Afganistan": "ABD"
+  },
+  {
+    "1": 225,
+    "AF": "UY",
+    "Afganistan": "Uruguay"
+  },
+  {
+    "1": 226,
+    "AF": "UZ",
+    "Afganistan": "Özbekistan"
+  },
+  {
+    "1": 227,
+    "AF": "VU",
+    "Afganistan": "Vanuatu"
+  },
+  {
+    "1": 228,
+    "AF": "VA",
+    "Afganistan": "Vatikan"
+  },
+  {
+    "1": 229,
+    "AF": "VE",
+    "Afganistan": "Venezuela"
+  },
+  {
+    "1": 230,
+    "AF": "VN",
+    "Afganistan": "Vietnam"
+  },
+  {
+    "1": 231,
+    "AF": "VG",
+    "Afganistan": "Virgin Adalari-Ingiltere"
+  },
+  {
+    "1": 232,
+    "AF": "VI",
+    "Afganistan": "Virgin Adalari-ABD"
+  },
+  {
+    "1": 233,
+    "AF": "WF",
+    "Afganistan": "Wallis And Futuna Adalari"
+  },
+  {
+    "1": 234,
+    "AF": "EH",
+    "Afganistan": "Bati Sahara"
+  },
+  {
+    "1": 235,
+    "AF": "YE",
+    "Afganistan": "Yemen"
+  },
+  {
+    "1": 236,
+    "AF": "ZM",
+    "Afganistan": "Zambiya"
+  },
+  {
+    "1": 237,
+    "AF": "ZW",
+    "Afganistan": "Zimbabve"
+  }
+]

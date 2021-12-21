@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using Hangar.Enum;
+using Hangar.Exception;
+using Hangar.Model;
+using Hangar.Model.Hangar;
 using Newtonsoft.Json;
-using PaxDrive.Enum;
-using PaxDrive.Exception;
-using PaxDrive.Model;
-using PaxDrive.Model.PaxDrive;
-using Vehicle = PaxDrive.Model.Vehicle;
+using Vehicle = Hangar.Model.Vehicle;
 
-namespace PaxDrive
+namespace Hangar
 {
-    public class PaxDriveClient
+    public class HangarClient
     {
         private readonly string _baseUrl;
         private readonly Currency _currency;
@@ -23,15 +23,15 @@ namespace PaxDrive
         private readonly string dateFormat = "yyyy-MM-dd HH:mm";
         private readonly string responseDateFormat = "yyyy-MM-dd HH:mm:ss";
 
-        public PaxDriveClient(string baseUrl, string token,string headerName) : this(baseUrl, token,headerName, Currency.Try)
+        public HangarClient(string baseUrl, string token, string headerName) : this(baseUrl, token, headerName, Currency.Try)
         {
         }
 
-        public PaxDriveClient(string baseUrl, string token,string headerName, Currency currency) : this(baseUrl, token,headerName, currency, Language.Turkish)
+        public HangarClient(string baseUrl, string token, string headerName, Currency currency) : this(baseUrl, token, headerName, currency, Language.Turkish)
         {
         }
 
-        public PaxDriveClient(string baseUrl, string token,string headerName, Currency currency, Language language)
+        public HangarClient(string baseUrl, string token, string headerName, Currency currency, Language language)
         {
             _baseUrl  = baseUrl;
             _token    = token;
@@ -39,7 +39,7 @@ namespace PaxDrive
             _language = language;
 
             _httpClient = new HttpClient {BaseAddress = new Uri(_baseUrl)};
-            _httpClient.DefaultRequestHeaders.Add(headerName, _token); 
+            _httpClient.DefaultRequestHeaders.Add(headerName, _token);
 
             _query = $"?cid={_currency.Value}&lng={_language.Value}";
         }
@@ -50,7 +50,7 @@ namespace PaxDrive
             string path = "check";
 
             var resultJson = _httpClient.GetAsync(path).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<PaxDriveCheckResponse>(resultJson);
+            var result     = JsonConvert.DeserializeObject<HangarCheckResponse>(resultJson);
 
             return new CheckResponse
             {
@@ -70,7 +70,7 @@ namespace PaxDrive
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<PaxDriveLocationResponse>(resultJson);
+            var result     = JsonConvert.DeserializeObject<HangarLocationResponse>(resultJson);
 
             return new LocationResponse
             {
@@ -113,7 +113,7 @@ namespace PaxDrive
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<List<PaxDriveLocation>>(resultJson);
+            var result     = JsonConvert.DeserializeObject<List<HangarLocation>>(resultJson);
 
             return new LocationResponse
             {
@@ -149,39 +149,26 @@ namespace PaxDrive
             {
                 new("vara_fr_id", searchVehicleRequest.FromLocationId.ToString()),
                 new("vara_to_id", searchVehicleRequest.ToLocationId.ToString()),
-                new("vara_fr_paximum_uid", searchVehicleRequest.FromPaximumId),
-                new("vara_to_paximum_uid", searchVehicleRequest.ToPaximumId),
-                new("vara_fr_gid", searchVehicleRequest.FromGlobalUniqueId),
-                new("vara_to_gid", searchVehicleRequest.ToGlobalUniqueId),
                 new("vara_date", searchVehicleRequest.ReservationDateTime.ToString(dateFormat)),
                 new("vara_pax_adt", searchVehicleRequest.AdultCount.ToString()),
                 new("vara_pax_kid", searchVehicleRequest.KidCount.ToString()),
                 new("vara_pax_bby", searchVehicleRequest.BabyCount.ToString()),
-                new("_type", searchVehicleRequest.TransferType.Value),
-                new("usr_mu_type", searchVehicleRequest.MarkupType.Value),
-                new("usr_mu_amnt", searchVehicleRequest.MarkupAmount.ToString())
+                new("_type", searchVehicleRequest.TransferType.Value)
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<PaxDriveVBookSearchResponse>(resultJson);
+            var result     = JsonConvert.DeserializeObject<HangarVBookSearchResponse>(resultJson);
 
 
             return new SearchVehicleResponse
             {
                 SearchId            = result.vara_id,
-                FromLocationId      = int.Parse(result.fr_loc_id),
-                ToLocationId        = int.Parse(result.to_loc_id),
-                FromGlobalUniqueId  = result.fr_loc_gid,
-                ToGlobalUniqueId    = result.to_loc_gid,
-                FromPaximumId       = result.fr_loc_paximum_uid,
-                ToPaximumId         = result.to_loc_paximum_uid,
+                FromLocationId      = result.fr_loc_id,
+                ToLocationId        = result.to_loc_id,
                 FromLocationName    = result.fr_loc,
                 ToLocationName      = result.to_loc,
-                ZoneName            = result.zone,
                 Distance            = result.distance,
                 RoadTime            = result.time,
-                MeetingImage        = result.fr_loc_meet_img,
-                MeetingDescription  = result.fr_loc_meet_txt,
                 ReservationDateTime = DateTime.ParseExact(result.date, responseDateFormat, null),
                 Vehicles = result.vehicle_.Select(v => new Vehicle
                 {
@@ -194,25 +181,26 @@ namespace PaxDrive
                     Image             = v._info_.photo,
                     PassengerCount    = v._info_.max_.pax,
                     SuitcaseCount     = v._info_.max_.suitcase,
-                    BookingTime       = v._info_.hour_.booking,
-                    FreeChangeTime    = v._info_.hour_.freeChange,
-                    FreeCancelTime    = v._info_.hour_.freeCancel,
-                    Quantity          = v.o.vbook_.suggestedVehicleCount,
-                    CurrencyId        = int.Parse(v.o.vbook_.sysPC_.cid),
-                    Currency          = Currency.GetByValue<Currency>(v.o.vbook_.sysPC_.cid),
-                    Price             = v.o.vbook_.sysPC_.prc,
-                    SalesPrice        = v.o.vbook_.usrPC_.prc,
-                    ExtraServices = v.o.vbook_.xser_?.Select(e => new ExtraService
-                    {
-                        Id          = e.uid,
-                        Code        = e.code,
-                        Title       = e.title,
-                        Description = e.descr,
-                        CurrencyId  = int.Parse(e.sysPC_.cid),
-                        Currency    = Currency.GetByValue<Currency>(e.sysPC_.cid),
-                        Price       = e.sysPC_.prc,
-                        SalesPrice  = e.usrPC_.prc
-                    }).ToList()
+                    BookingTime       = v._info_.hour_.book,
+                    FreeChangeTime    = v._info_.hour_.cncl,
+                    FreeCancelTime    = v._info_.hour_.edit,
+                    Quantity          = v.o.vbook_.vehicle_count,
+                    CurrencyId        = v.o.vbook_.usrPC_.cid, // system currency id 
+                    // CurrencyId        = int.Parse(v.o.vbook_.sysPC_.cid),
+                    Currency   = Currency.GetByValue<Currency>(v.o.vbook_.usrPC_.cid),
+                    Price      = v.o.vbook_.usrPC_.prc,
+                    SalesPrice = v.o.vbook_.usrPC_.prc,
+                    // ExtraServices = v.o.vbook_.xser_?.Select(e => new ExtraService
+                    // {
+                    //     Id          = e.uid,
+                    //     Code        = e.code,
+                    //     Title       = e.title,
+                    //     Description = e.descr,
+                    //     CurrencyId  = int.Parse(e.sysPC_.cid),
+                    //     Currency    = Currency.GetByValue<Currency>(e.sysPC_.cid),
+                    //     Price       = e.sysPC_.prc,
+                    //     SalesPrice  = e.usrPC_.prc
+                    // }).ToList()
                 }).ToList()
             };
         }
@@ -231,7 +219,7 @@ namespace PaxDrive
             foreach (var extraServiceRequest in selectVehicleRequest.ExtraServices) values.Add(new KeyValuePair<string, string>("xser_uid_[]", extraServiceRequest.ToString()));
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<PaxDriveVBookSelectResponse>(resultJson);
+            var result     = JsonConvert.DeserializeObject<HangarVBookSelectResponse>(resultJson);
 
 
             return new SelectVehicleResponse
@@ -248,25 +236,25 @@ namespace PaxDrive
                     Image             = result.vehicle._info_.photo,
                     PassengerCount    = result.vehicle._info_.max_.pax,
                     SuitcaseCount     = result.vehicle._info_.max_.suitcase,
-                    BookingTime       = result.vehicle._info_.hour_.booking,
-                    FreeChangeTime    = result.vehicle._info_.hour_.freeChange,
-                    FreeCancelTime    = result.vehicle._info_.hour_.freeCancel,
-                    Quantity          = result.vehicle.o.vbook_.suggestedVehicleCount,
-                    CurrencyId        = int.Parse(result.vehicle.o.vbook_.sysPC_.cid),
-                    Currency          = Currency.GetByValue<Currency>(result.vehicle.o.vbook_.sysPC_.cid),
-                    Price             = result.vehicle.o.vbook_.sysPC_.prc,
+                    BookingTime       = result.vehicle._info_.hour_.book,
+                    FreeChangeTime    = result.vehicle._info_.hour_.edit,
+                    FreeCancelTime    = result.vehicle._info_.hour_.cncl,
+                    Quantity          = result.vehicle.o.vbook_.vehicle_count,
+                    CurrencyId        = result.vehicle.o.vbook_.usrPC_.cid,
+                    Currency          = Currency.GetByValue<Currency>(result.vehicle.o.vbook_.usrPC_.cid),
+                    Price             = result.vehicle.o.vbook_.usrPC_.prc,
                     SalesPrice        = result.vehicle.o.vbook_.usrPC_.prc,
-                    ExtraServices = result.vehicle.o.vbook_.xser_.Select(e => new ExtraService
-                    {
-                        Id          = e.uid,
-                        Code        = e.code,
-                        Title       = e.title,
-                        Description = e.descr,
-                        CurrencyId  = int.Parse(e.sysPC_.cid),
-                        Currency    = Currency.GetByValue<Currency>(e.sysPC_.cid),
-                        Price       = e.sysPC_.prc,
-                        SalesPrice  = e.usrPC_.prc
-                    }).ToList()
+                    // ExtraServices = result.vehicle.o.vbook_.xser_.Select(e => new ExtraService
+                    // {
+                    //     Id          = e.uid,
+                    //     Code        = e.code,
+                    //     Title       = e.title,
+                    //     Description = e.descr,
+                    //     CurrencyId  = int.Parse(e.sysPC_.cid),
+                    //     Currency    = Currency.GetByValue<Currency>(e.sysPC_.cid),
+                    //     Price       = e.sysPC_.prc,
+                    //     SalesPrice  = e.usrPC_.prc
+                    // }).ToList()
                 }
             };
         }
@@ -287,12 +275,8 @@ namespace PaxDrive
                 new("vbook_name", createCardRequest.PassengerName),
                 new("vbook_mail", createCardRequest.PassengerEmail),
                 new("vbook_mpno", createCardRequest.PassengerPhone),
-                new("vbook_nation", createCardRequest.PassengerNationalityCode),
                 new("vbook_idno", createCardRequest.PassengerIdentityNumber),
-                new("vbook_note_ur", createCardRequest.Note),
-                new("cart_name", createCardRequest.PassengerName),
-                new("cart_mail", createCardRequest.PassengerEmail),
-                new("cart_mpno", createCardRequest.PassengerPhone)
+                new("vbook_note_ur", createCardRequest.Note)
             };
 
             int adultCount = 0, kidCount = -1, babyCount = -1;
@@ -326,9 +310,9 @@ namespace PaxDrive
             }
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<PaxDriveCreateCardResponse>(resultJson);
+            var result     = JsonConvert.DeserializeObject<HangarCreateCardResponse>(resultJson);
 
-            if (!result.CI.enabled) throw new PaxDriveException("error", "Bir hata oluştu", "Transfer");
+            if (!result.CI.enabled) throw new HangarException("error", "Bir hata oluştu", "Transfer");
 
             return new CreateCardResponse
             {
@@ -339,71 +323,44 @@ namespace PaxDrive
             };
         }
 
-        public CreateCardResponse CheckoutCard(CreateCardRequest createCardRequest)
+        public CheckoutResponse Checkout(CheckoutRequest checkoutRequest)
         {
             string path = "cart/checkout" + _query;
 
             var values = new List<KeyValuePair<string, string>>
             {
-                new("req_id", createCardRequest.SelectId),
-                new("remote_fr_name", createCardRequest.FromLocationName),
-                new("vbook_fr_a", createCardRequest.fromMessage),
-                new("vbook_fr_b", createCardRequest.FromDescription),
-                new("remote_to_name", createCardRequest.ToLocationName),
-                new("vbook_to_a", createCardRequest.ToMessage),
-                new("vbook_to_b", createCardRequest.ToDescription),
-                new("vbook_name", createCardRequest.PassengerName),
-                new("vbook_mail", createCardRequest.PassengerEmail),
-                new("vbook_mpno", createCardRequest.PassengerPhone),
-                new("vbook_nation", createCardRequest.PassengerNationalityCode),
-                new("vbook_idno", createCardRequest.PassengerIdentityNumber),
-                new("vbook_note_ur", createCardRequest.Note),
-                new("cart_name", createCardRequest.PassengerName),
-                new("cart_mail", createCardRequest.PassengerEmail),
-                new("cart_mpno", createCardRequest.PassengerPhone)
+                new("token", checkoutRequest.Token),
+                new("method", "CI")
             };
 
-            int adultCount = 0, kidCount = -1, babyCount = -1;
-
-            foreach (var passenger in createCardRequest.Passengers)
-            {
-                string key = passenger.PassengerType.Value;
-
-                if (passenger.PassengerType.Value == PassengerType.Adult.Value)
-                {
-                    adultCount++;
-                    key = passenger.PassengerType.Value + adultCount;
-                }
-
-                if (passenger.PassengerType.Value == PassengerType.Kid.Value)
-                {
-                    kidCount++;
-                    key = passenger.PassengerType.Value + kidCount;
-                }
-
-                if (passenger.PassengerType.Value == PassengerType.Baby.Value)
-                {
-                    babyCount++;
-                    key = passenger.PassengerType.Value + babyCount;
-                }
-
-
-                values.Add(new KeyValuePair<string, string>($"paxName_[{key}]", passenger.Name));
-                values.Add(new KeyValuePair<string, string>($"paxNation_[{key}]", passenger.NationalityCode));
-                values.Add(new KeyValuePair<string, string>($"paxIdno_[{key}]", passenger.IdentityNumber));
-            }
-
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<PaxDriveCreateCardResponse>(resultJson);
+            var result     = JsonConvert.DeserializeObject<HangarCheckoutResponse>(resultJson);
 
-            if (!result.CI.enabled) throw new PaxDriveException("error", "Bir hata oluştu", "Transfer");
+            if (!result.cart_.Any()) throw new HangarException("error", "Bir hata oluştu", "Transfer");
 
-            return new CreateCardResponse
+            return new CheckoutResponse
             {
-                Token      = result.token,
-                Total      = result.CI.pc_.prc,
-                CurrencyId = result.CI.pc_.cid,
-                Currency   = Currency.GetByValue<Currency>(result.CI.pc_.cid)
+                Status    = true,
+                OrderCode = result.vbook_[0].vbook_code,
+                Reservation = new Reservation()
+                {
+                    Id                      = result.vbook_[0].vbook_id,
+                    Code                    = result.vbook_[0].vbook_code,
+                    TransferType            = TransferType.GetByValue<TransferType>(result.vbook_[0].vbook_type),
+                    FromLocationName        = result.vbook_[0].vbook_fr,
+                    FromDescription         = result.vbook_[0].vbook_fr_a,
+                    FromMessage             = result.vbook_[0].vbook_fr_b,
+                    ToLocationName          = result.vbook_[0].vbook_to,
+                    ToDescription           = result.vbook_[0].vbook_to_a,
+                    ToMessage               = result.vbook_[0].vbook_to_b,
+                    ReservationDate         = DateTime.ParseExact(result.cart_[0].cart_infoc, responseDateFormat, null),
+                    PassengerName           = result.vbook_[0].vbook_name,
+                    PassengerIdentityNumber = result.vbook_[0].vbook_idno,
+                    PassengerEmail          = result.vbook_[0].vbook_mail,
+                    PassengerPhone          = result.vbook_[0].vbook_mpno,
+                    VehicleType             = VehicleType.GetByValue<VehicleType>(result.vbook_[0].vbook_type),
+                    Cards                   = result.cart_.Select(c => new Card {Id = c.cart_id}).ToList()
+                }
             };
         }
 
@@ -418,7 +375,7 @@ namespace PaxDrive
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<PaxDriveGetListResponse>(resultJson);
+            var result     = JsonConvert.DeserializeObject<HangarGetListResponse>(resultJson);
 
             return new GetListResponse
             {
@@ -428,22 +385,21 @@ namespace PaxDrive
                 TotalPage   = 0,
                 Reservations = result.vbook_.Select(x => new Reservation
                 {
-                    Id                       = x.vbook_id,
-                    Code                     = x.vbook_code,
-                    TransferType             = TransferType.GetByValue<TransferType>(x.vbook_type),
-                    FromLocationName         = x.vbook_fr,
-                    FromDescription          = x.vbook_fr_a,
-                    FromMessage              = x.vbook_fr_b,
-                    ToLocationName           = x.vbook_to,
-                    ToDescription            = x.vbook_to_a,
-                    ToMessage                = x.vbook_to_b,
-                    ReservationDate          = DateTime.ParseExact(x.vbook_date, responseDateFormat, null),
-                    PassengerName            = x.vbook_name,
-                    PassengerIdentityNumber  = x.vbook_idno,
-                    PassengerEmail           = x.vbook_mail,
-                    PassengerPhone           = x.vbook_mpno,
-                    PassengerNationalityCode = x.vbook_nation,
-                    VehicleType              = VehicleType.GetByValue<VehicleType>(x.vbook_vehicle_type),
+                    Id                      = x.vbook_id,
+                    Code                    = x.vbook_code,
+                    TransferType            = TransferType.GetByValue<TransferType>(x.vbook_type),
+                    FromLocationName        = x.vbook_fr,
+                    FromDescription         = x.vbook_fr_a,
+                    FromMessage             = x.vbook_fr_b,
+                    ToLocationName          = x.vbook_to,
+                    ToDescription           = x.vbook_to_a,
+                    ToMessage               = x.vbook_to_b,
+                    ReservationDate         = DateTime.ParseExact(x.vbook_date, responseDateFormat, null),
+                    PassengerName           = x.vbook_name,
+                    PassengerIdentityNumber = x.vbook_idno,
+                    PassengerEmail          = x.vbook_mail,
+                    PassengerPhone          = x.vbook_mpno,
+                    VehicleType             = VehicleType.GetByValue<VehicleType>(x.vbook_type),
                     Cards = result.cart_.Where(c => c.cart_object_id == x.vbook_id).Select(c => new Card
                     {
                         Id = c.cart_id
@@ -507,7 +463,7 @@ namespace PaxDrive
             }
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<PaxDriveEditResponse>(resultJson);
+            var result     = JsonConvert.DeserializeObject<HangarEditResponse>(resultJson);
 
 
             return new EditCardResponse
@@ -527,7 +483,7 @@ namespace PaxDrive
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<PaxDriveEditDateResponse>(resultJson);
+            var result     = JsonConvert.DeserializeObject<HangarEditDateResponse>(resultJson);
 
             return new EditReservationDateResponse
             {
@@ -545,27 +501,27 @@ namespace PaxDrive
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<PaxDriveReservationResponse>(resultJson);
+            var result     = JsonConvert.DeserializeObject<HangarReservationResponse>(resultJson);
 
             return result.vbook_.Select(x => new Reservation
             {
-                Id                       = x.vbook_id,
-                Code                     = x.vbook_code,
-                TransferType             = TransferType.GetByValue<TransferType>(x.vbook_type),
-                FromLocationName         = x.vbook_fr,
-                FromDescription          = x.vbook_fr_a,
-                FromMessage              = x.vbook_fr_b,
-                ToLocationName           = x.vbook_to,
-                ToDescription            = x.vbook_to_a,
-                ToMessage                = x.vbook_to_b,
-                ReservationDate          = DateTime.ParseExact(x.vbook_date, responseDateFormat, null),
-                PassengerName            = x.vbook_name,
-                PassengerIdentityNumber  = x.vbook_idno,
-                PassengerEmail           = x.vbook_mail,
-                PassengerPhone           = x.vbook_mpno,
-                PassengerNationalityCode = x.vbook_nation,
-                VehicleType              = VehicleType.GetByValue<VehicleType>(x.vbook_vehicle_type),
-                Cards                    = result.cart_.Select(c => new Card {Id = c.cart_id}).ToList()
+                Id                      = x.vbook_id,
+                Code                    = x.vbook_code,
+                TransferType            = TransferType.GetByValue<TransferType>(x.vbook_type),
+                FromLocationName        = x.vbook_fr,
+                FromDescription         = x.vbook_fr_a,
+                FromMessage             = x.vbook_fr_b,
+                ToLocationName          = x.vbook_to,
+                ToDescription           = x.vbook_to_a,
+                ToMessage               = x.vbook_to_b,
+                ReservationDate         = DateTime.ParseExact(x.vbook_date, responseDateFormat, null),
+                PassengerName           = x.vbook_name,
+                PassengerIdentityNumber = x.vbook_idno,
+                PassengerEmail          = x.vbook_mail,
+                PassengerPhone          = x.vbook_mpno,
+                // PassengerNationalityCode = x.vbook_nation,
+                VehicleType = VehicleType.GetByValue<VehicleType>(x.vbook_type),
+                Cards       = result.cart_.Select(c => new Card {Id = c.cart_id}).ToList()
             }).FirstOrDefault();
         }
 
@@ -579,14 +535,13 @@ namespace PaxDrive
             };
 
             var resultJson = _httpClient.PostAsync(path, new FormUrlEncodedContent(values)).Result.Content.ReadAsStringAsync().Result;
-            var result     = JsonConvert.DeserializeObject<PaxDriveCancelResponse>(resultJson);
+            var result     = JsonConvert.DeserializeObject<HangarCancelResponse>(resultJson);
 
             return new CancelResponse
             {
                 Status = result.success
             };
         }
-
 
         public CancelResponse CancelReservation(string orderCode)
         {
@@ -597,7 +552,7 @@ namespace PaxDrive
                 foreach (var card in reservation.Cards)
                 {
                     var result = CancelCard(new CancelRequest {CardId = card.Id});
-                    if (result.Status == false) throw new PaxDriveException("error", "iptal işlemi sırasında bir hata oluştur.", "Transfer");
+                    if (result.Status == false) throw new HangarException("error", "iptal işlemi sırasında bir hata oluştur.", "Transfer");
                 }
 
                 return new CancelResponse
@@ -633,6 +588,7 @@ namespace PaxDrive
                     Note                     = editReservationRequest.Note,
                     Passengers               = editReservationRequest.Passengers
                 });
+                
                 var resultDate = EditReservationDate(new EditReservationDateRequest
                 {
                     OrderCode       = editReservationRequest.OrderCode,

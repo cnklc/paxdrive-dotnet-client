@@ -13,7 +13,7 @@ namespace Test
 
         public PaxDrive()
         {
-            _paxDriveClient = new PaxDriveClient("http://api.paxdrive-dev.poisoft.com/v1/", "121_98cd7eacfcb2aa7d083a4de7f08b8db52849194b", Currency.Try, Language.Turkish);
+             
         }
 
 
@@ -22,7 +22,7 @@ namespace Test
         {
             var result = _paxDriveClient.Check();
 
-            Assert.AreEqual(result.PartnerId, "72");
+            Assert.AreEqual(result.PartnerId, "72"); 
         }
 
         [Test]
@@ -58,9 +58,9 @@ namespace Test
                 TransferType        = TransferType.PointToPoint,
                 MarkupType          = MarkupType.Percent,
                 MarkupAmount        = 10,
-                ReservationDateTime = new DateTime(2022, 1, 10),
-                FromLocationId      = 136,
-                ToLocationId        = 148
+                ReservationDateTime = new DateTime(2022, 1, 10), 
+                FromLocationId = 136,   // Ayt
+                ToLocationId   = 148    // Alanya
             };
 
             var result = _paxDriveClient.SearchVehicle(request);
