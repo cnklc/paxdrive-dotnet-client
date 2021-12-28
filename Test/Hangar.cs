@@ -13,7 +13,8 @@ namespace Test
 
         public Hangar()
         {
-           
+            var settings = AppSettings.HangarSettings;
+            _hangarClient = new HangarClient(settings.Url, settings.Token, settings.TokenName, Currency.Try, Language.Turkish);
         }
 
 
@@ -94,45 +95,8 @@ namespace Test
 
             var result1 = _hangarClient.SelectVehicle(request1);
 
-            var card = new CreateCardRequest
-            {
-                SelectId                 = result1.SelectId,
-                FromLocationName         = "FromLocationName",
-                FromDescription          = "FromDescription",
-                fromMessage              = "fromMessage",
-                ToLocationName           = "ToLocationName",
-                ToDescription            = "ToDescription",
-                ToMessage                = "ToMessage",
-                PassengerName            = "PassengerName",
-                PassengerEmail           = "PassengerEmail",
-                PassengerPhone           = "PassengerPhone",
-                PassengerNationalityCode = "TR",
-                PassengerIdentityNumber  = "5555555555",
-                Passengers = new List<PassengerRequest>
-                {
-                    new()
-                    {
-                        PassengerType   = PassengerType.Adult,
-                        Name            = "Test Yetiskin",
-                        NationalityCode = "TR",
-                        IdentityNumber  = "123"
-                    },
-                    new()
-                    {
-                        PassengerType   = PassengerType.Kid,
-                        Name            = "test cocuk",
-                        NationalityCode = "TR",
-                        IdentityNumber  = "123"
-                    },
-                    new()
-                    {
-                        PassengerType   = PassengerType.Baby,
-                        Name            = "test bebek",
-                        NationalityCode = "TR",
-                        IdentityNumber  = "123"
-                    }
-                }
-            };
+            var card    = createCardRequest();
+            card.SelectId = result1.SelectId;
             var result2 = _hangarClient.CreateCard(card);
 
             Assert.IsTrue(!string.IsNullOrEmpty(result2.Token));
@@ -145,9 +109,9 @@ namespace Test
         public void Checkout()
         {
             var request = createSearchVehicleRequest();
-        
+
             var result = _hangarClient.SearchVehicle(request);
-        
+
             var request1 = new SelectVehicleRequest
             {
                 SearchId  = result.SearchId,
@@ -155,57 +119,20 @@ namespace Test
                 VehicleId = result.Vehicles[0].Id
             };
             // request1.ExtraServices.Add(result.Vehicles[0].ExtraServices[0].Id);
-        
+
             var result1 = _hangarClient.SelectVehicle(request1);
-        
-            var card = new CreateCardRequest
-            {
-                SelectId                 = result1.SelectId,
-                FromLocationName         = "FromLocationName",
-                FromDescription          = "FromDescription",
-                fromMessage              = "fromMessage",
-                ToLocationName           = "ToLocationName",
-                ToDescription            = "ToDescription",
-                ToMessage                = "ToMessage",
-                PassengerName            = "PassengerName",
-                PassengerEmail           = "PassengerEmail",
-                PassengerPhone           = "PassengerPhone",
-                PassengerNationalityCode = "TR",
-                PassengerIdentityNumber  = "5555555555",
-                Passengers = new List<PassengerRequest>
-                {
-                    new()
-                    {
-                        PassengerType   = PassengerType.Adult,
-                        Name            = "Test Yetiskin",
-                        NationalityCode = "TR",
-                        IdentityNumber  = "123"
-                    },
-                    new()
-                    {
-                        PassengerType   = PassengerType.Kid,
-                        Name            = "test cocuk",
-                        NationalityCode = "TR",
-                        IdentityNumber  = "123"
-                    },
-                    new()
-                    {
-                        PassengerType   = PassengerType.Baby,
-                        Name            = "test bebek",
-                        NationalityCode = "TR",
-                        IdentityNumber  = "123"
-                    }
-                }
-            };
+
+            var card = createCardRequest();
+            card.SelectId = result1.SelectId;
             var result2 = _hangarClient.CreateCard(card);
-        
+
             Assert.IsTrue(!string.IsNullOrEmpty(result2.Token));
-        
+
             var totalPrice = result.Vehicles[0].SalesPrice; //+ result.Vehicles[0].ExtraServices[0].SalesPrice;
             Assert.IsTrue(Math.Round(totalPrice) == Math.Round(result2.Total));
-        
+
             var checkoutResult = _hangarClient.Checkout(new CheckoutRequest() {Token = result2.Token});
-            
+
             Assert.IsTrue(checkoutResult.Status);
             Assert.IsTrue(!string.IsNullOrEmpty(checkoutResult.Reservation.Code));
         }
@@ -213,9 +140,9 @@ namespace Test
         [Test]
         public void GetByCode()
         {
-            var reservaation = _hangarClient.GetByCode("200103506");
+            var reservaation = _hangarClient.GetByCode("200204526");
 
-            Assert.IsTrue(reservaation.Code == "200103506");
+            Assert.IsTrue(reservaation.Code == "200204526");
         }
 
         [Test]
@@ -236,10 +163,9 @@ namespace Test
 
             var reservation = _hangarClient.GetByCode(orderCode);
             Assert.IsNotNull(reservation);
-            
+
             var result = _hangarClient.CancelReservation(orderCode);
             Assert.IsTrue(result.Status);
-            
         }
 
 
@@ -247,13 +173,56 @@ namespace Test
         {
             return new SearchVehicleRequest
             {
-                AdultCount          = 1,
+                AdultCount          = 2,
                 KidCount            = 1,
-                BabyCount           = 0,
+                BabyCount           = 1,
                 TransferType        = TransferType.PointToPoint,
                 ReservationDateTime = new DateTime(2022, 2, 2),
                 FromLocationId      = 9, // Ayt
                 ToLocationId        = 92 // Alanya 
+            };
+        }
+
+        private CreateCardRequest createCardRequest()
+        {
+            return new CreateCardRequest
+            {
+                // SelectId                 = result1.SelectId,
+                FromLocationName         = "FromLocationName",
+                FromDescription          = "FromDescription",
+                fromMessage              = "fromMessage",
+                ToLocationName           = "ToLocationName",
+                ToDescription            = "ToDescription",
+                ToMessage                = "ToMessage",
+                PassengerName            = "Test Name",
+                PassengerEmail           = "Email",
+                PassengerPhone           = "Phone",
+                PassengerNationalityCode = "TR",
+                PassengerIdentityNumber  = "5555555555",
+                Passengers = new List<PassengerRequest>
+                {
+                    new()
+                    {
+                        PassengerType   = PassengerType.Adult,
+                        Name            = "Test Yetiskin",
+                        NationalityCode = "TR",
+                        IdentityNumber  = "123"
+                    },
+                    new()
+                    {
+                        PassengerType   = PassengerType.Kid,
+                        Name            = "test cocuk",
+                        NationalityCode = "TR",
+                        IdentityNumber  = "123"
+                    },
+                    new()
+                    {
+                        PassengerType   = PassengerType.Baby,
+                        Name            = "test bebek",
+                        NationalityCode = "TR",
+                        IdentityNumber  = "123"
+                    }
+                }
             };
         }
     }
