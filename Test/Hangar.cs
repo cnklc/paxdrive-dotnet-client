@@ -178,8 +178,8 @@ namespace Test
                 BabyCount           = 1,
                 TransferType        = TransferType.PointToPoint,
                 ReservationDateTime = new DateTime(2022, 2, 2),
-                FromLocationId      = 9, // Ayt
-                ToLocationId        = 92 // Alanya 
+                FromLocationId      = 9, // Ayt 
+                ToLocationId        = 89 // belek 
             };
         }
 
