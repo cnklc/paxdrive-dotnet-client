@@ -96,7 +96,7 @@ namespace Hangar.Model.Hangar
         public int vehicle_count { get; set; }
         public Mu mu_ { get; set; }
         public UsrPC usrPC_ { get; set; }
-        public int sortPrc { get; set; }
+        public decimal sortPrc { get; set; }
         public object xser_ { get; set; }
     }
 
@@ -142,7 +142,7 @@ namespace Hangar.Model.Hangar
 
     public class UsrPC
     {
-        public int prc { get; set; }
+        public decimal prc { get; set; }
         public int cid { get; set; }
     }
 
